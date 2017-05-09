@@ -60,7 +60,7 @@ with an input file
     ✓ should store a cheerio-elements as `.$`
 
 
-  1 passing (243ms)
+  1 passing (205ms)
 ```
 
 
