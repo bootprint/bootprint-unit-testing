@@ -13,16 +13,28 @@
 'use strict'
 
 var expect = require('chai').expect
-var core = require('../')(require('./fixtures/module.js'), __dirname)
+var tester = require('../')
 
 describe('The bootprint-unit-testing module', function () {
   this.timeout(10000)
-  var context = {}
-  before(function () {
-    return core.run({ name: 'Nils' }, context)
+
+  describe('with an input file', function () {
+    var bptest = tester(require('./fixtures/module.js'), __dirname, 'fixtures/test-input.json')
+
+    before(bptest.run)
+
+    it('should store a cheerio-elements as `.$`', function () {
+      expect(bptest.$('p').html()).to.contain('Nils')
+    })
   })
 
-  it('should pass a cheerio-elements as `context.$`', function () {
-    expect(context.$('p').html()).to.contain('Nils')
+  describe('with an input json', function () {
+    var bptest = tester(require('./fixtures/module.js'), __dirname, { name: 'Nils' })
+
+    before(bptest.run)
+
+    it('should store a cheerio-elements as `.$`', function () {
+      expect(bptest.$('p').html()).to.contain('Nils')
+    })
   })
 })

@@ -4,7 +4,6 @@
 [![Travis Build Status](https://travis-ci.org/bootprint/bootprint-unit-testing.svg?branch=master)](https://travis-ci.org/bootprint/bootprint-unit-testing)
 [![Coverage Status](https://img.shields.io/coveralls/bootprint/bootprint-unit-testing.svg)](https://coveralls.io/r/bootprint/bootprint-unit-testing)
 
-
 > Unit-testing-tools for bootprint-projects
 
 
@@ -25,35 +24,30 @@ Consider a bootprint-module that uses the following Handlebarse-template as `ind
 ```
 
 
+and a file `test-input.json`:
+
+```json
+{ "name": "Nils" }
+```
+
+
 A test can be written like this: 
 
 ```js
-/*!
- * bootprint-unit-testing <https://github.com/bootprint/bootprint-unit-testing>
- *
- * Copyright (c) 2017 Nils Knappmeier.
- * Released under the MIT license.
- */
-
-/* global describe */
-/* global it */
-/* global before */
-// /* global xit */
-
-'use strict'
+/* eslint-env mocha */
 
 var expect = require('chai').expect
-var core = require('bootprint-unit-testing')(require('./module.js'), __dirname)
+var tester = require('bootprint-unit-testing')
 
-describe('The bootprint-unit-testing module', function () {
-  this.timeout(10000)
-  var context = {}
-  before(function () {
-    return core.run({ name: 'Nils' }, context)
-  })
+describe('with an input file', function () {
+  var bptest = tester(require('./module.js'), __dirname, 'test-input.json')
 
-  it('The output should contain the name in a <p>-tag', function () {
-    expect(context.$('p').html()).to.contain('Nils')
+  // Run bootprint. The parsed "index.html"-file (cheerio) is then available
+  // under "bptest.$"
+  before(bptest.run)
+
+  it('should store a cheerio-elements as `.$`', function () {
+    expect(bptest.$('p').html()).to.contain('Nils')
   })
 })
 ```
@@ -62,24 +56,26 @@ The test will run bootprint with the given module and verify the generated HTML
 using the [cheerio](https://npmjs.com/package/cheerio) library.
 
 ```
-The bootprint-unit-testing module
-    ✓ The output should contain the name in a <p>-tag
+with an input file
+    ✓ should store a cheerio-elements as `.$`
 
 
-  1 passing (376ms)
+  1 passing (243ms)
 ```
 
 
 
-## License
+# License
 
-`bootprint-unit-testing` is published under the MIT-license. 
+`bootprint-unit-testing` is published under the MIT-license.
+
 See [LICENSE.md](LICENSE.md) for details.
 
-## Release-Notes
+
+# Release-Notes
  
 For release notes, see [CHANGELOG.md](CHANGELOG.md)
  
-## Contributing guidelines
+# Contributing guidelines
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).

@@ -1,28 +1,16 @@
-/*!
- * bootprint-unit-testing <https://github.com/bootprint/bootprint-unit-testing>
- *
- * Copyright (c) 2017 Nils Knappmeier.
- * Released under the MIT license.
- */
-
-/* global describe */
-/* global it */
-/* global before */
-// /* global xit */
-
-'use strict'
+/* eslint-env mocha */
 
 var expect = require('chai').expect
-var core = require('../')(require('./module.js'), __dirname)
+var tester = require('../')
 
-describe('The bootprint-unit-testing module', function () {
-  this.timeout(10000)
-  var context = {}
-  before(function () {
-    return core.run({ name: 'Nils' }, context)
-  })
+describe('with an input file', function () {
+  var bptest = tester(require('./module.js'), __dirname, 'test-input.json')
 
-  it('The output should contain the name in a <p>-tag', function () {
-    expect(context.$('p').html()).to.contain('Nils')
+  // Run bootprint. The parsed "index.html"-file (cheerio) is then available
+  // under "bptest.$"
+  before(bptest.run)
+
+  it('should store a cheerio-elements as `.$`', function () {
+    expect(bptest.$('p').html()).to.contain('Nils')
   })
 })
