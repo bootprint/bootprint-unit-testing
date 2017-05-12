@@ -42,4 +42,22 @@ describe('The bootprint-unit-testing module', function () {
       })
     })
   })
+
+  describe('the read()-function', function () {
+    var bptest = tester(require('./fixtures/module.js'), __dirname, {name: 'Nils'})
+    before(bptest.run)
+
+    it('should return the string contents of a file in the target directory (sync)', function () {
+      fs.writeFileSync(path.join(bptest.targetDir, 'test.txt'), 'abc')
+      expect(bptest.read('test.txt')).to.equal('abc')
+    })
+
+    it('should return undefined for non-existing files', function () {
+      expect(bptest.read('test2.txt')).not.to.be.ok()
+    })
+
+    it('should throw an error for other errors', function () {
+      expect(() => bptest.read('.')).to.throw(Error)
+    })
+  })
 })

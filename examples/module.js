@@ -5,6 +5,9 @@ module.exports = function (builder) {
   return builder.merge({
     handlebars: {
       templates: path.resolve(__dirname, 'templates')
+    },
+    less: {
+      main: path.resolve(__dirname, 'less/main.less')
     }
   })
 }

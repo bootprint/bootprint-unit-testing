@@ -6,7 +6,8 @@
  */
 
 var pify = require('pify')
-var readFile = pify(require('fs').readFile)
+var fs = require('fs')
+var readFile = pify(fs.readFile)
 var makeTree = pify(require('mkdirp'))
 var removeTree = pify(require('rimraf'))
 var cheerio = require('cheerio')
@@ -45,5 +46,20 @@ class BootprintTest {
       .then(() => new Bootprint(this.bootprintModule, {}).run(this.rawInput, this.targetDir))
       .then(() => readFile(path.join(this.targetDir, 'index.html'), 'utf-8'))
       .then(indexHtml => { this.$ = cheerio.load(indexHtml) })
+  }
+
+  /**
+   * Read a file from the target directory
+   * @param {string} filename the path to the file relative to the target directory
+   */
+  read (filename) {
+    try {
+      return fs.readFileSync(path.join(this.targetDir, filename), 'utf-8')
+    } catch (e) {
+      if (e.code === 'ENOENT') {
+        return undefined
+      }
+      throw e
+    }
   }
 }
