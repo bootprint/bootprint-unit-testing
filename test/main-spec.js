@@ -12,29 +12,34 @@
 
 'use strict'
 
-var expect = require('chai').expect
+let chai = require('chai')
+chai.use(require('dirty-chai'))
+var expect = chai.expect
 var tester = require('../')
+var fs = require('fs')
+var path = require('path')
 
 describe('The bootprint-unit-testing module', function () {
   this.timeout(10000)
 
-  describe('with an input file', function () {
-    var bptest = tester(require('./fixtures/module.js'), __dirname, 'fixtures/test-input.json')
+  describe('the .$ property', function () {
+    describe('when an input file was provided', function () {
+      var bptest = tester(require('./fixtures/module.js'), __dirname, 'fixtures/test-input.json')
 
-    before(bptest.run)
-
-    it('should store a cheerio-elements as `.$`', function () {
-      expect(bptest.$('p').html()).to.contain('Nils')
+      before(bptest.run)
+      it('should contain a cheerio-element of the index.html-file', function () {
+        expect(bptest.$('p').html()).to.contain('Nils')
+      })
     })
-  })
 
-  describe('with an input json', function () {
-    var bptest = tester(require('./fixtures/module.js'), __dirname, { name: 'Nils' })
+    describe('when an input object was provided', function () {
+      var bptest = tester(require('./fixtures/module.js'), __dirname, {name: 'Nils'})
 
-    before(bptest.run)
+      before(bptest.run)
 
-    it('should store a cheerio-elements as `.$`', function () {
-      expect(bptest.$('p').html()).to.contain('Nils')
+      it('should contain a cheerio-element of the index.html-file', function () {
+        expect(bptest.$('p').html()).to.contain('Nils')
+      })
     })
   })
 })

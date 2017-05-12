@@ -19,26 +19,31 @@ var {Bootprint} = require('bootprint')
  * @param dir the directory(-name) from which this function is called
  * @param input the name of the file that contains the input for
  *  bootprint (relative to "dir")
- * @returns {{run: function, $: cheerio}} "run" can be called as "before" block,
+ * @returns {BootprintTest} "run" can be called as "before" block,
  *  the cheerio-object of the generated index.html is store in $ thereafter.
  */
 module.exports = function (bootprintModule, dir, input) {
-  const targetDir = path.join('test-output', path.basename(dir))
-  const rawInput = typeof input === 'string'
-    ? path.join(dir, input)
-    : input
+  let bootprintTest = new BootprintTest(bootprintModule, dir, input)
+  // Make sure that "this" is the correct object
+  bootprintTest.run = bootprintTest.run.bind(bootprintTest)
+  return bootprintTest
+}
 
-  const bptest = {}
-
-  function run () {
-    return removeTree(targetDir)
-      .then(() => makeTree(targetDir))
-      .then(() => new Bootprint(bootprintModule, {}).run(rawInput, targetDir))
-      .then(() => readFile(path.join(targetDir, 'index.html'), 'utf-8'))
-      .then(indexHtml => { bptest.$ = cheerio.load(indexHtml) })
+class BootprintTest {
+  constructor (bootprintModule, dir, input) {
+    this.bootprintModule = bootprintModule
+    this.targetDir = path.join('test-output', path.basename(dir))
+    this.rawInput = typeof input === 'string'
+      ? path.join(dir, input)
+      : input
+    this.dir = dir
   }
 
-  bptest.run = run
-
-  return bptest
+  run () {
+    return removeTree(this.targetDir)
+      .then(() => makeTree(this.targetDir))
+      .then(() => new Bootprint(this.bootprintModule, {}).run(this.rawInput, this.targetDir))
+      .then(() => readFile(path.join(this.targetDir, 'index.html'), 'utf-8'))
+      .then(indexHtml => { this.$ = cheerio.load(indexHtml) })
+  }
 }
