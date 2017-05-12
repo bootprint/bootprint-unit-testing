@@ -66,7 +66,7 @@ bootprint
     ✓ should write a black background to the main.css file
 
 
-  2 passing (216ms)
+  2 passing (243ms)
 ```
 
 

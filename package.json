@@ -3,7 +3,7 @@
     "tag": "next"
   },
   "name": "bootprint-unit-testing",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Unit-testing-tools for bootprint-projects",
   "repository": {
     "type": "git",
