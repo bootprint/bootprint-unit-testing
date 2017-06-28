@@ -59,7 +59,6 @@ describe('bootprint', function () {
     // Load any file from the target directory via "bptest.read()"
     expect(bptest.textIn('p')).to.equal('name: Nils')
   })
-
 })
 ```
 
@@ -73,7 +72,7 @@ bootprint
     ✓ should give normalized access to the selector contents via textIn
 
 
-  3 passing (212ms)
+  3 passing (213ms)
 ```
 
 

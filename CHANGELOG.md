@@ -1,6 +1,10 @@
 # Release notes for `bootprint-unit-testing`
 
 <a name="current-release"></a>
+# Version 2.2.0 (Wed, 28 Jun 2017 20:09:29 GMT)
+
+* [ed3241f](https://github.com/bootprint/bootprint-unit-testing/commit/ed3241f) Add "textIn"-method to give normalized access to selectors text-contents - Nils Knappmeier
+
 # Version 2.1.0 (Fri, 12 May 2017 09:01:08 GMT)
 
 * [55e3e47](https://github.com/bootprint/bootprint-unit-testing/commit/55e3e47) Add: ".read" method to load files from the target directory - Nils Knappmeier
