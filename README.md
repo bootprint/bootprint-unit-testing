@@ -54,6 +54,12 @@ describe('bootprint', function () {
     // Load any file from the target directory via "bptest.read()"
     expect(bptest.read('main.css')).to.contain('background:black')
   })
+
+  it('should give normalized access to the selector contents via textIn', function () {
+    // Load any file from the target directory via "bptest.read()"
+    expect(bptest.textIn('p')).to.equal('name: Nils')
+  })
+
 })
 ```
 
@@ -64,9 +70,10 @@ using the [cheerio](https://npmjs.com/package/cheerio) library.
 bootprint
     ✓ should write "Nils" to index.html
     ✓ should write a black background to the main.css file
+    ✓ should give normalized access to the selector contents via textIn
 
 
-  2 passing (243ms)
+  3 passing (212ms)
 ```
 
 

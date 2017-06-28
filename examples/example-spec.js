@@ -18,4 +18,9 @@ describe('bootprint', function () {
     // Load any file from the target directory via "bptest.read()"
     expect(bptest.read('main.css')).to.contain('background:black')
   })
+
+  it('should give normalized access to the selector contents via textIn', function () {
+    // Load any file from the target directory via "bptest.read()"
+    expect(bptest.textIn('p')).to.equal('name: Nils')
+  })
 })

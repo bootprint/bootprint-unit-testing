@@ -60,4 +60,13 @@ describe('The bootprint-unit-testing module', function () {
       expect(() => bptest.read('.')).to.throw(Error)
     })
   })
+
+  describe('the textIn()-function', function () {
+    var bptest = tester(require('./fixtures/module.js'), __dirname, {name: '  Nils  \n   Knappmeier  '})
+    before(bptest.run)
+
+    it('should return the text()-contents of an element, normalized to single spaces and trimmed', function () {
+      expect(bptest.textIn('p')).to.equal('name: Nils Knappmeier')
+    })
+  })
 })

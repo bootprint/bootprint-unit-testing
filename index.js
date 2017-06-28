@@ -30,6 +30,11 @@ module.exports = function (bootprintModule, dir, input) {
   return bootprintTest
 }
 
+/**
+ * The test body
+ *
+ * @api public
+ */
 class BootprintTest {
   constructor (bootprintModule, dir, input) {
     this.bootprintModule = bootprintModule
@@ -40,6 +45,12 @@ class BootprintTest {
     this.dir = dir
   }
 
+  /**
+   * Runs bootprint and fills the `$`-property with a cheerio instance.
+   *
+   * @return {Promise<any>} a Promise to be fulfilled with when bootprint has finished
+   * @api public
+   */
   run () {
     return removeTree(this.targetDir)
       .then(() => makeTree(this.targetDir))
@@ -51,6 +62,7 @@ class BootprintTest {
   /**
    * Read a file from the target directory
    * @param {string} filename the path to the file relative to the target directory
+   * @api public
    */
   read (filename) {
     try {
@@ -61,5 +73,19 @@ class BootprintTest {
       }
       throw e
     }
+  }
+
+  /**
+   * Returns the normalized text inside a selector of the resulting "index.html"-file.
+   *
+   * The text does not contain elements (`$.text()`). Multiple consecutive spaces are
+   * merged into a single space and spaces from both sides of the string are trimmed.
+   *
+   * @param {string} selector the CSS-selector
+   * @return {string} the normalized text-content.
+   * @api public
+   */
+  textIn (selector) {
+    return this.$(selector).text().replace(/\s+/g, ' ').trim()
   }
 }
