@@ -38,7 +38,7 @@ module.exports = function (bootprintModule, dir, input) {
 class BootprintTest {
   constructor (bootprintModule, dir, input) {
     this.bootprintModule = bootprintModule
-    this.targetDir = path.join('test-output', path.basename(dir))
+    this.targetDir = path.join('test-output', path.relative('.', dir))
     this.rawInput = typeof input === 'string'
       ? path.join(dir, input)
       : input
