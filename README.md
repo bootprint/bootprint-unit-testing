@@ -72,7 +72,7 @@ bootprint
     ✓ should give normalized access to the selector contents via textIn
 
 
-  3 passing (213ms)
+  3 passing (215ms)
 ```
 
 

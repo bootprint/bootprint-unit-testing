@@ -1,6 +1,10 @@
 # Release notes for `bootprint-unit-testing`
 
 <a name="current-release"></a>
+# Version 2.2.1 (Fri, 28 Jul 2017 19:28:41 GMT)
+
+* [95573ac](https://github.com/bootprint/bootprint-unit-testing/commit/95573ac) Include full relative path in target directory - Nils Knappmeier
+
 # Version 2.2.0 (Wed, 28 Jun 2017 20:09:29 GMT)
 
 * [ed3241f](https://github.com/bootprint/bootprint-unit-testing/commit/ed3241f) Add "textIn"-method to give normalized access to selectors text-contents - Nils Knappmeier
